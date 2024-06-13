@@ -3,5 +3,6 @@ export const Colors = {
   White: "#ffffff",
   Black: "#000000",
   Facebook: "#1877f2",
-  Login: "#FF416C",
+  Naver: "#03c75a",
+  Login: "#ff8041",
 };
