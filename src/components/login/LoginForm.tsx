@@ -3,6 +3,7 @@ import { Colors } from "../../utils/colors";
 import SocialLogin from "./SocialLogin";
 import { NavigateFunction } from "react-router-dom";
 import { Container, FindPasswordText, Input, JoinLayout, LoginButton, LoginFormLayout, LoginLayout, SubTitle, Text, Title } from "../../assets/css/login";
+import { setCookie } from "../../utils/cookie";
 
 const initUserInfo: LoginReq.SingUpProps = {
   user_id: "",
@@ -47,10 +48,19 @@ const LoginForm = (props: LoginComponentProps) => {
   }, [monitor]);
 
   const onClickButtonInLoginForm = useCallback(() => {
-    if( !userInfo.name ) {
-      console.log("로그인한다링");
+    const { user_id, password, name } = userInfo;
+
+    if( !name ) {
+      if( user_id === "eoqna" || password === "dbgn12" ) {
+        setCookie("login", "1", {path: "/"});
+        navigation("/");
+      }
     }
   }, [userInfo]);
+
+  const onKeyDownEnter = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if( e.key === "Enter" ) onClickButtonInLoginForm();
+  }, [onClickButtonInLoginForm]);
 
   return (
     <Container>
@@ -76,6 +86,7 @@ const LoginForm = (props: LoginComponentProps) => {
           <Input 
             type="password"
             value={userInfo.password}
+            onKeyDown={(e) => onKeyDownEnter(e)}
             onChange={(e) => setUserInfo({ ...userInfo, password: e.target.value })}
             placeholder="Password"
           />

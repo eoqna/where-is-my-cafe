@@ -3,6 +3,9 @@ import styled from "styled-components";
 import Home from "../screen/Home";
 import { Colors } from "../utils/colors";
 import Login from "../screen/start/Login";
+import useDataStore from "../store/useDataStore";
+import { getCookie } from "../utils/cookie";
+import { useEffect } from "react";
 
 const Layout = styled.div`
   width: 100%;
@@ -12,6 +15,21 @@ const Layout = styled.div`
 
 const Navigations = () => {
   const navigation = useNavigate();
+  const { isLogin } = useDataStore();
+  const login = getCookie("login");
+
+  useEffect(() => {
+    if( login !== 1 ) {
+      console.log("?");
+      navigation("/login");
+      return;
+    } else {
+
+      isLogin(true);
+      navigation("/");
+    }
+
+  }, []);
 
   return (
     <Layout>
