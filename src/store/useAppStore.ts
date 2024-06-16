@@ -8,6 +8,8 @@ interface ModalState {
 interface DataState {
   modal: ModalState;
   openModal: (data: ModalState) => void;
+  sidebar: boolean;
+  openSidebar: (data: boolean) => void;
 };
 
 const defaultModalState: ModalState = {
@@ -15,10 +17,11 @@ const defaultModalState: ModalState = {
   content: () => "",
 };
 
-
 const useAppStore = create<DataState>()((set) => ({
   modal: defaultModalState,
   openModal: (data) => set({ modal: data }),
+  sidebar: false,
+  openSidebar: (data) => set({ sidebar: data }),
 }));
 
 export default useAppStore;

@@ -6,6 +6,8 @@ import Login from "../screen/start/Login";
 import useDataStore from "../store/useDataStore";
 import { getCookie } from "../utils/cookie";
 import { useEffect } from "react";
+import useAppStore from "../store/useAppStore";
+import Sidebar from "../components/Sidebar";
 
 const Layout = styled.div`
   width: 100%;
@@ -15,6 +17,7 @@ const Layout = styled.div`
 
 const Navigations = () => {
   const navigation = useNavigate();
+  const { sidebar, openSidebar } = useAppStore();
   const { isLogin } = useDataStore();
   const login = getCookie("login");
 
@@ -23,16 +26,16 @@ const Navigations = () => {
       console.log("?");
       navigation("/login");
       return;
-    } else {
-
-      isLogin(true);
-      navigation("/");
     }
 
+    isLogin(true);
+    openSidebar(true);
+    navigation("/");
   }, []);
 
   return (
     <Layout>
+      {sidebar && <Sidebar />}
       <Routes>
         <Route index element={<Home navigation={navigation} />} />
         <Route path="/login" element={<Login navigation={navigation} />} />

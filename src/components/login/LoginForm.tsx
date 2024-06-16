@@ -4,6 +4,7 @@ import SocialLogin from "./SocialLogin";
 import { NavigateFunction } from "react-router-dom";
 import { Container, FindPasswordText, Input, JoinLayout, LoginButton, LoginFormLayout, LoginLayout, SubTitle, Text, Title } from "../../assets/css/login";
 import { setCookie } from "../../utils/cookie";
+import useAppStore from "../../store/useAppStore";
 
 const initUserInfo: LoginReq.SingUpProps = {
   user_id: "",
@@ -20,6 +21,7 @@ interface LoginComponentProps {
 
 const LoginForm = (props: LoginComponentProps) => {
   const { text, monitor, setMonitor, navigation } = props;
+  const { openSidebar } = useAppStore();
   const [ userInfo, setUserInfo ] = useState(initUserInfo);
 
   const submit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
@@ -53,6 +55,7 @@ const LoginForm = (props: LoginComponentProps) => {
     if( !name ) {
       if( user_id === "eoqna" || password === "dbgn12" ) {
         setCookie("login", "1", {path: "/"});
+        openSidebar(true);
         navigation("/");
       }
     }
