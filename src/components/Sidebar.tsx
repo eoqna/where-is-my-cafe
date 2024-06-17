@@ -1,9 +1,8 @@
-import { mdiChevronLeft, mdiClose, mdiMagnify } from "@mdi/js";
+import { mdiChevronLeft, mdiChevronRight, mdiClose, mdiMagnify } from "@mdi/js";
 import Icon from "@mdi/react";
 import styled from "styled-components";
 import { Colors } from "../utils/colors";
 import { useCallback, useState } from "react";
-import useAppStore from "../store/useAppStore";
 
 const Layout = styled.div`
   position: absolute;
@@ -15,6 +14,31 @@ const Layout = styled.div`
   background-color: rgb(255, 255, 255);
   box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 5px 0px 15px 0px;
   transform: translateX(0%);
+  transition: all 0.3s ease-out;
+  user-select: none;
+`;
+
+const SidebarControlButton = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  z-index: 10;
+  overflow: hidden;
+  display: inline-block;
+  font-size: 1px;
+  line-height: 1px;
+  color: transparent;
+  vertical-align: top;
+  width: 22px;
+  height: 49px;
+  background: ${Colors.White};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  cursor: pointer;
 `;
 
 const SearchBarLayout = styled.div`
@@ -116,30 +140,7 @@ const DeleteButton = styled.button`
   cursor: pointer;
 `;
 
-const SidebarControlButton = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  transform: translateY(-50%);
-  z-index: 10;
-  overflow: hidden;
-  display: inline-block;
-  font-size: 1px;
-  line-height: 1px;
-  color: transparent;
-  vertical-align: top;
-  width: 22px;
-  height: 49px;
-  background: ${Colors.White};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  cursor: pointer;
-`;
-
-const CafeContentLayout = styled.div`
+const ContentLayout = styled.div`
   position: relative;
   z-index: 0;
   display: flex;
@@ -150,22 +151,85 @@ const CafeContentLayout = styled.div`
   box-sizing: border-box;
 `;
 
+const CafeContentLayout = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: #ddd;
+  }
+  ::-webkit-scrollbar-thumb { 
+    background-color: #aaa;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+`;
+
+const RegionLayout = styled.div`
+  flex: 0 0 auto;
+  margin: 0px 25px -1px;
+  padding-bottom: 17px;
+`;
+
+const RegionTextLayout = styled.div`
+  position: relative;
+  min-height: 24px;
+  padding-right: 60px;
+`;
+
+const Region = styled.span`
+  font-size: 19px;
+  line-height: 24px;
+  font-weight: bold;
+  letter-spacing: -0.73px;
+  color: rgb(51, 51, 51);
+  vertical-align: top;
+`;
+
+const CafeListLayout = styled.div`
+  display: flex;
+  position: relative;
+  height: 100%;
+  flex: 1 1 auto;
+  flex-direction: column;
+`;
+
+const CafeList = styled.div`
+  flex: 1 0 0px;
+  overflow: hidden auto;
+  border-top: 1px solid transparent;
+`;
+
+const CafeInfo = styled.div`
+  padding: 0px 25px;
+  height: 400px;
+`;
+
 const Sidebar = () => {
   const [ text, setText ] = useState("");
-  const { sidebar, openSidebar } = useAppStore();
+  const [ open, isOpen ] = useState(true);
 
   const onClickSidebarControlButton = useCallback(() => {
     const layout = document.querySelector(".sidebar-layout") as HTMLElement;
 
-    console.log(layout.style.transform);
+    if( open ) {
+      layout.style.transform = "translateX(-100%)";
+    } else {
+      layout.style.transform = "translateX(0%)";
+    }
 
-    layout.style.transform = "translateX(-100%)";
-  }, [sidebar])
+    isOpen(!open);
+  }, [open])
 
   return (
     <Layout className="sidebar-layout">
       <SidebarControlButton onClick={onClickSidebarControlButton}>
-        <Icon path={mdiChevronLeft} color="rgb(156, 156, 156)" />
+        <Icon path={open ? mdiChevronLeft : mdiChevronRight} color="rgb(156, 156, 156)" />
       </SidebarControlButton>
       <SearchBarLayout>
         <SearchBar>
@@ -186,7 +250,25 @@ const Sidebar = () => {
           </SearchBox>
         </SearchBar>
       </SearchBarLayout>
-      <CafeContentLayout></CafeContentLayout>
+      <ContentLayout>
+        <CafeContentLayout>
+          <RegionLayout>
+            <RegionTextLayout>
+              <Region>상록구 월피동</Region>
+            </RegionTextLayout>
+          </RegionLayout>
+          <CafeListLayout>
+            <CafeList>
+              <CafeInfo></CafeInfo>
+              <CafeInfo></CafeInfo>
+              <CafeInfo></CafeInfo>
+              <CafeInfo></CafeInfo>
+              <CafeInfo></CafeInfo>
+              <CafeInfo></CafeInfo>
+            </CafeList>
+          </CafeListLayout>
+        </CafeContentLayout>
+      </ContentLayout>
     </Layout>
   );
 };
