@@ -1,6 +1,6 @@
 import { ComponentProps } from "../navigation";
 import { Layout } from "../assets/css/common";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { KAKAO_REST_API_KEY } from "../utils/config";
 import axiosClient from "../utils/axiosClient";
@@ -16,40 +16,61 @@ const Map = styled.div`
   height: 100%;
 `;
 
+interface CafeInfoProps {
+  address_name: string;
+  category_group_code: string;
+  category_group_name: string;
+  category_name: string;
+  distance: string;
+  id: string;
+  phone: string;
+  place_name: string;
+  place_url: string;
+  road_address_name: string;
+  x: string;
+  y: string;
+}
+
 const Home = (props: ComponentProps) => {
   const { navigation } = props;
-
+  const [ cafeList, setCafeList ] = useState<CafeInfoProps[]>([]);
+  
   const onLoadKakaoMap = useCallback(() => {
-    const container = document.getElementById("map");
+    const container = document.getElementById("map") as HTMLElement;
     const position = new window.kakao.maps.LatLng(33.450701, 126.570667);
-    const options = {
-      center: position,
-      level: 3,
+    const options = { center: position, level: 3, };
+    const map = new window.kakao.maps.Map(container, options);
+    const ps = new window.kakao.maps.services.Places(map);
+
+    // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+    const placesSearchCB = (data: CafeInfoProps[], status: any) => {
+      if (status === window.kakao.maps.services.Status.OK) {
+        data.map((v, i) => {
+          // 마커를 생성하고 지도에 표시합니다
+          const position = new window.kakao.maps.LatLng(v.y, v.x);
+          const cafe = [...cafeList];
+
+          cafe.push(v);
+
+          setCafeList(cafe);
+    
+          const marker = new window.kakao.maps.Marker({
+            position: position
+          });
+
+          console.log(cafeList);
+    
+          marker.setMap(map);
+        });
+      }
     };
 
-    const map = new window.kakao.maps.Map(container, options);
-
-    var marker = new window.kakao.maps.Marker({
-      position: position
-    });
-
-    marker.setMap(map);
-
-    const ps = new window.kakao.maps.services.Places(map); 
-
-    // 카테고리로 은행을 검색합니다
-    ps.categorySearch('CE7', placesSearchCB, {useMapBounds:true}); 
-  }, []);
-
-  // 키워드 검색 완료 시 호출되는 콜백함수 입니다
-  function placesSearchCB (data: any, status: any, pagination: number) {
-    console.log("status: ", status);
-    console.log("data: ", data);
-  };
+    ps.categorySearch("CE7", placesSearchCB, { useMapBounds: true }); 
+  }, [cafeList]);
 
   useEffect(() => {
     onLoadKakaoMap();
-  }, [onLoadKakaoMap]);
+  }, []);
 
   const searchCafeListToKakao = useCallback(async () => {
     const strParam = "query=''&category_group_code=CE7&x=33.450701&y=126.570667&radius=500"
@@ -70,8 +91,7 @@ const Home = (props: ComponentProps) => {
 
   return (
     <Layout>
-      <Map id="map"
-      ></Map>
+      <Map id="map"></Map>
     </Layout>
   );
 };
