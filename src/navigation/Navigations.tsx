@@ -23,7 +23,6 @@ const Navigations = () => {
 
   useEffect(() => {
     if( login !== 1 ) {
-      console.log("?");
       navigation("/login");
       return;
     }

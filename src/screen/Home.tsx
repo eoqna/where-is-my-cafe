@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { KAKAO_REST_API_KEY } from "../utils/config";
 import axiosClient from "../utils/axiosClient";
+import useDataStore from "../store/useDataStore";
 
 declare global {
   interface Window {
@@ -29,11 +30,11 @@ interface CafeInfoProps {
   road_address_name: string;
   x: string;
   y: string;
-}
+};
 
 const Home = (props: ComponentProps) => {
   const { navigation } = props;
-  const [ cafeList, setCafeList ] = useState<CafeInfoProps[]>([]);
+  const { cafeList, setCafeList } = useDataStore();
   
   const onLoadKakaoMap = useCallback(() => {
     const container = document.getElementById("map") as HTMLElement;
@@ -45,23 +46,23 @@ const Home = (props: ComponentProps) => {
     // 키워드 검색 완료 시 호출되는 콜백함수 입니다
     const placesSearchCB = (data: CafeInfoProps[], status: any) => {
       if (status === window.kakao.maps.services.Status.OK) {
+        if( cafeList.length ) setCafeList([]);
+        
         data.map((v, i) => {
           // 마커를 생성하고 지도에 표시합니다
           const position = new window.kakao.maps.LatLng(v.y, v.x);
-          const cafe = [...cafeList];
-
+          const cafe = cafeList;
           cafe.push(v);
-
           setCafeList(cafe);
     
           const marker = new window.kakao.maps.Marker({
             position: position
           });
-
-          console.log(cafeList);
     
           marker.setMap(map);
         });
+
+        console.log(data);
       }
     };
 
