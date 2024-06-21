@@ -32,14 +32,13 @@ interface CafeInfoProps {
   y: string;
 };
 
-const Home = (props: ComponentProps) => {
-  const { navigation } = props;
+const Home = () => {
   const { cafeList, setCafeList } = useDataStore();
   
   const onLoadKakaoMap = useCallback(() => {
     const container = document.getElementById("map") as HTMLElement;
     const position = new window.kakao.maps.LatLng(33.450701, 126.570667);
-    const options = { center: position, level: 3, };
+    const options = { center: position, level: 5, };
     const map = new window.kakao.maps.Map(container, options);
     const ps = new window.kakao.maps.services.Places(map);
 

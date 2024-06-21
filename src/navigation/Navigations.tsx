@@ -12,6 +12,7 @@ import Sidebar from "../components/Sidebar";
 const Layout = styled.div`
   width: 100%;
   height: 100%;
+  user-select: none;
   background: ${Colors.BG};
 `;
 
@@ -34,11 +35,13 @@ const Navigations = () => {
 
   return (
     <Layout>
-      {sidebar && <Sidebar />}
-      <Routes>
-        <Route index element={<Home navigation={navigation} />} />
-        <Route path="/login" element={<Login navigation={navigation} />} />
-      </Routes>
+      <Layout>
+        {sidebar && <Sidebar />}
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/login" element={<Login navigation={navigation} />} />
+        </Routes>
+      </Layout>
     </Layout>
   );
 };
