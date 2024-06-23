@@ -37,7 +37,7 @@ const Home = () => {
   
   const onLoadKakaoMap = useCallback(() => {
     const container = document.getElementById("map") as HTMLElement;
-    const position = new window.kakao.maps.LatLng(33.450701, 126.570667);
+    const position = new window.kakao.maps.LatLng(37.6043902, 126.9150857);
     const options = { center: position, level: 5, };
     const map = new window.kakao.maps.Map(container, options);
     const ps = new window.kakao.maps.services.Places(map);
