@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Colors } from "../../utils/colors";
 import SocialLogin from "./SocialLogin";
 import { NavigateFunction } from "react-router-dom";
@@ -23,6 +23,8 @@ const LoginForm = (props: LoginComponentProps) => {
   const { text, monitor, setMonitor, navigation } = props;
   const { openSidebar } = useAppStore();
   const [ userInfo, setUserInfo ] = useState(initUserInfo);
+  const idRef = useRef<HTMLInputElement>(null);
+  const pwRef = useRef<HTMLInputElement>(null);
 
   const submit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -58,6 +60,18 @@ const LoginForm = (props: LoginComponentProps) => {
         openSidebar(true);
         navigation("/");
       }
+    } else {
+      if( !user_id ) {
+        idRef.current?.focus();
+        return alert("아이디를 입력해주세요.");
+      }
+
+      if( !password ) {
+        pwRef.current?.focus();
+        return alert("비밀번호를 입력해주세요.");
+      }
+
+      alert("가입이 완료됐습니다!");
     }
   }, [userInfo]);
 
@@ -83,12 +97,14 @@ const LoginForm = (props: LoginComponentProps) => {
           <Input 
             type="text"
             value={userInfo.user_id}
+            ref={idRef}
             onChange={(e) => setUserInfo({ ...userInfo, user_id: e.target.value })}
             placeholder="ID"
           />
           <Input 
             type="password"
             value={userInfo.password}
+            ref={pwRef}
             onKeyDown={(e) => onKeyDownEnter(e)}
             onChange={(e) => setUserInfo({ ...userInfo, password: e.target.value })}
             placeholder="Password"
