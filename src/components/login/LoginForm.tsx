@@ -23,6 +23,7 @@ const LoginForm = (props: LoginComponentProps) => {
   const { text, monitor, setMonitor, navigation } = props;
   const { openSidebar } = useAppStore();
   const [ userInfo, setUserInfo ] = useState(initUserInfo);
+  const nmRef = useRef<HTMLInputElement>(null);
   const idRef = useRef<HTMLInputElement>(null);
   const pwRef = useRef<HTMLInputElement>(null);
 
@@ -54,26 +55,32 @@ const LoginForm = (props: LoginComponentProps) => {
   const onClickButtonInLoginForm = useCallback(() => {
     const { user_id, password, name } = userInfo;
 
-    if( !name ) {
+    if( monitor && !name ) {
+      nmRef.current?.focus();
+      return alert("닉네임을 입력해주세요.");
+    }
+
+    if( !user_id ) {
+      idRef.current?.focus();
+      return alert("아이디를 입력해주세요.");
+    }
+
+    if( !password ) {
+      pwRef.current?.focus();
+      return alert("비밀번호를 입력해주세요.");
+    }
+
+    if( !monitor ) {
       if( user_id === "eoqna" || password === "dbgn12" ) {
         setCookie("login", "1", {path: "/"});
         openSidebar(true);
         navigation("/");
       }
     } else {
-      if( !user_id ) {
-        idRef.current?.focus();
-        return alert("아이디를 입력해주세요.");
-      }
-
-      if( !password ) {
-        pwRef.current?.focus();
-        return alert("비밀번호를 입력해주세요.");
-      }
-
-      alert("가입이 완료됐습니다!");
+      alert("가입이 완료됐습니다!\n로그인 해주세요!");
+      onClickSubButton();
     }
-  }, [userInfo]);
+  }, [userInfo, monitor]);
 
   const onKeyDownEnter = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if( e.key === "Enter" ) onClickButtonInLoginForm();
@@ -90,6 +97,7 @@ const LoginForm = (props: LoginComponentProps) => {
             : <Input 
                 type="text"
                 value={userInfo.name}
+                ref={nmRef}
                 onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
                 placeholder="Name"
               />

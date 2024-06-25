@@ -1,6 +1,5 @@
-import { ComponentProps } from "../navigation";
 import { Layout } from "../assets/css/common";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { KAKAO_REST_API_KEY } from "../utils/config";
 import axiosClient from "../utils/axiosClient";
