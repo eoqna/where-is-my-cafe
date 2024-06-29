@@ -25,17 +25,15 @@ const Login = (props: ComponentProps) => {
         joinTitle: "Hello, Friend!",
         joinText: "Enter your personal details and start journey with us",
       });
-
-      return;
+    } else {
+      setText({
+        loginButton: "SIGN UP",
+        joinButton: "SIGN IN",
+        loginTitle: "Create Account",
+        joinTitle: "Welcome Back!",
+        joinText: "To keep connected with us please login with your personal info",
+      });
     }
-
-    setText({
-      loginButton: "SIGN UP",
-      joinButton: "SIGN IN",
-      loginTitle: "Create Account",
-      joinTitle: "Welcome Back!",
-      joinText: "To keep connected with us please login with your personal info",
-    });
   }, [monitor]);
 
   return (

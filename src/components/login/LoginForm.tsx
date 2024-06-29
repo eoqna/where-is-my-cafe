@@ -27,10 +27,6 @@ const LoginForm = (props: LoginComponentProps) => {
   const idRef = useRef<HTMLInputElement>(null);
   const pwRef = useRef<HTMLInputElement>(null);
 
-  const submit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  }, []);
-
   const onClickSubButton = useCallback(() => {
     const signIn = document.querySelector(".sign_in_layout") as HTMLElement;
     const signUp = document.querySelector(".sign_up_layout") as HTMLElement;
@@ -89,7 +85,7 @@ const LoginForm = (props: LoginComponentProps) => {
   return (
     <Container>
       <LoginLayout className="sign_in_layout">
-        <LoginFormLayout onSubmit={(e) => submit(e)}>
+        <LoginFormLayout>
           <Title $color={Colors.Black}>{text.loginTitle}</Title>
           <SocialLogin />
           {!monitor 

@@ -36,13 +36,13 @@ const Home = () => {
   
   const onLoadKakaoMap = useCallback(() => {
     const container = document.getElementById("map") as HTMLElement;
-    const position = new window.kakao.maps.LatLng(37.6043902, 126.9150857);
-    const options = { center: position, level: 5, };
-    const map = new window.kakao.maps.Map(container, options);
+    const position: Window & typeof globalThis = new window.kakao.maps.LatLng(37.6043902, 126.9150857);
+    const options = { center: position, level: 5 };
+    const map: Window & typeof globalThis = new window.kakao.maps.Map(container, options);
     const ps = new window.kakao.maps.services.Places(map);
 
-    // 키워드 검색 완료 시 호출되는 콜백함수 입니다
-    const placesSearchCB = (data: CafeInfoProps[], status: any) => {
+    // 키워드 검색 완료 시 호출되는 콜백 함수
+    const placesSearchCB = (data: CafeInfoProps[], status: Window & typeof globalThis) => {
       if (status === window.kakao.maps.services.Status.OK) {
         if( cafeList.length ) setCafeList([]);
         
@@ -59,8 +59,6 @@ const Home = () => {
     
           marker.setMap(map);
         });
-
-        console.log(data);
       }
     };
 
