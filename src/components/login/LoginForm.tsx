@@ -102,6 +102,7 @@ const LoginForm = (props: LoginComponentProps) => {
             type="text"
             value={userInfo.user_id}
             ref={idRef}
+            autoComplete="user_id"
             onChange={(e) => setUserInfo({ ...userInfo, user_id: e.target.value })}
             placeholder="ID"
           />
@@ -109,6 +110,7 @@ const LoginForm = (props: LoginComponentProps) => {
             type="password"
             value={userInfo.password}
             ref={pwRef}
+            autoComplete="user_password"
             onKeyDown={(e) => onKeyDownEnter(e)}
             onChange={(e) => setUserInfo({ ...userInfo, password: e.target.value })}
             placeholder="Password"
