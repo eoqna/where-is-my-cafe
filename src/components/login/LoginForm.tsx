@@ -31,7 +31,7 @@ const LoginForm = (props: LoginComponentProps) => {
     const signIn = document.querySelector(".sign_in_layout") as HTMLElement;
     const signUp = document.querySelector(".sign_up_layout") as HTMLElement;
 
-    if( !signIn.style.left || signIn.style.left === "0px" ) {
+    if (!signIn.style.left || signIn.style.left === "0px") {
       signIn.style.left = "50%";
       signUp.style.right = "50%";
     } else {
@@ -51,23 +51,23 @@ const LoginForm = (props: LoginComponentProps) => {
   const onClickButtonInLoginForm = useCallback(() => {
     const { user_id, password, name } = userInfo;
 
-    if( monitor && !name ) {
+    if (monitor && !name) {
       nmRef.current?.focus();
       return alert("닉네임을 입력해주세요.");
     }
 
-    if( !user_id ) {
+    if (!user_id) {
       idRef.current?.focus();
       return alert("아이디를 입력해주세요.");
     }
 
-    if( !password ) {
+    if (!password) {
       pwRef.current?.focus();
       return alert("비밀번호를 입력해주세요.");
     }
 
-    if( !monitor ) {
-      if( user_id === "eoqna" || password === "dbgn12" ) {
+    if (!monitor) {
+      if (user_id === "eoqna" || password === "dbgn12") {
         setCookie("login", "1", {path: "/"});
         openSidebar(true);
         navigation("/");
@@ -79,7 +79,7 @@ const LoginForm = (props: LoginComponentProps) => {
   }, [userInfo, monitor]);
 
   const onKeyDownEnter = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-    if( e.key === "Enter" ) onClickButtonInLoginForm();
+    if (e.key === "Enter") onClickButtonInLoginForm();
   }, [onClickButtonInLoginForm]);
 
   return (

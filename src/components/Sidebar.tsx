@@ -14,7 +14,7 @@ const Sidebar = () => {
   const onClickSidebarControlButton = useCallback(() => {
     const layout = document.querySelector(".sidebar-layout") as HTMLElement;
 
-    if( open ) {
+    if (open) {
       layout.style.transform = "translateX(-100%)";
     } else {
       layout.style.transform = "translateX(0%)";

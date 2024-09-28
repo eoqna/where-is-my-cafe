@@ -27,7 +27,7 @@ const Home = () => {
     // 키워드 검색 완료 시 호출되는 콜백 함수
     const placesSearchCB = (data: ApiResponse.CafeInfoProps[], status: Window & typeof globalThis) => {
       if (status === window.kakao.maps.services.Status.OK) {
-        if( allCafeList.length ) setAllCafeList([]);
+        if (allCafeList.length) setAllCafeList([]);
         
         data.map((v) => {
           // 마커를 생성하고 지도에 표시합니다

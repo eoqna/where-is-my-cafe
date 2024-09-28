@@ -17,7 +17,7 @@ const Login = (props: ComponentProps) => {
   const [ monitor, setMonitor ] = useState(false);
 
   useEffect(() => {
-    if( !monitor ) {
+    if (!monitor) {
       setText({
         loginButton: "SIGN IN",
         joinButton: "SIGN UP",

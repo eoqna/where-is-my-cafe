@@ -23,7 +23,7 @@ const Navigations = () => {
   const login = getCookie("login");
 
   useEffect(() => {
-    if( login !== 1 ) {
+    if (login !== 1) {
       navigation("/login");
       return;
     }
