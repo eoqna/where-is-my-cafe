@@ -35,10 +35,10 @@ export const LoginFormLayout = styled.form`
   text-align: center;
 `;
 
-export const Title = styled.h1<{ $color: string }>`
+export const Title = styled.h1<{ $color: string; }>`
   font-weight: bold;
   margin: 0;
-  color: ${(props) => props.$color};
+  color: ${({ $color }) => $color};
 `;
 
 export const SocialLoginLayout = styled.div`
@@ -81,10 +81,10 @@ export const FindPasswordText = styled.a`
   margin: 15px 0;
 `;
 
-export const LoginButton = styled.button<{ $bg: string, $border: string }>`
+export const LoginButton = styled.button<{ $bg: string; $border: string; }>`
   border-radius: 20px;
-  border: 1px solid ${(props) => props.$border};
-  background: ${(props) => props.$bg};
+  border: 1px solid ${({ $border }) => $border};
+  background: ${({ $bg }) => $bg};
   color: #FFFFFF;
   font-size: 12px;
   font-weight: bold;

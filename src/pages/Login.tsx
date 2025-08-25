@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Layout } from "../../assets/css/common";
-import { ComponentProps } from "../../navigation";
-import LoginForm from "../../components/login/LoginForm";
+import { Layout } from "../assets/css/common";
+import { NavigationProps } from "../navigation";
+import { LoginForm } from "../components";
 
 const initText: LoginReq.TextProps = {
   loginButton: "",
@@ -11,8 +11,7 @@ const initText: LoginReq.TextProps = {
   joinText: "",
 };
 
-const Login = (props: ComponentProps) => {
-  const { navigation } = props;
+const Login = ({ navigation }: NavigationProps) => {
   const [ text, setText ] = useState(initText);
   const [ monitor, setMonitor ] = useState(false);
 

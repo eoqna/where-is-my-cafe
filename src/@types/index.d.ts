@@ -12,6 +12,7 @@ declare namespace ApiResponse {
     road_address_name: string;
     x: string;
     y: string;
+    photo_urls?: string[];
   };
 }
 

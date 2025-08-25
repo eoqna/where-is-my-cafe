@@ -1,23 +1,38 @@
 import { mdiChevronLeft, mdiChevronRight, mdiClose, mdiMagnify } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Colors } from "../utils/colors";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import useDataStore from "../store/useDataStore";
-import { CafeContentLayout, CafeHeaderLayout, CafeImg, CafeImgLayout, CafeInfo, CafeInfoLayout, CafeList, CafeListLayout, CafeName, CafeTextLayout, CategoryText, ContentLayout, DeleteButton, DescText, InputBox, InputBoxLabel, InputBoxText, Layout, Region, RegionLayout, RegionTextLayout, SearchBar, SearchBarLayout, SearchBox, SearchButton, SidebarControlButton } from "../assets/css/sidebar";
+import { 
+  CafeContentLayout, CafeHeaderLayout, 
+  CafeImg, CafeImgLayout,
+  CafeInfo, CafeInfoLayout, 
+  CafeList, CafeListLayout, 
+  CafeName, CafeTextLayout, 
+  CategoryText, ContentLayout, 
+  DeleteButton, DescText, 
+  InputBox, InputBoxLabel, 
+  InputBoxText, Layout,
+  Region, RegionLayout, 
+  RegionTextLayout, SearchBar,
+  SearchBarLayout, SearchBox, 
+  SearchButton, SidebarControlButton 
+} from "../assets/css/sidebar";
 
 const Sidebar = () => {
   const [ text, setText ] = useState("");
   const [ open, isOpen ] = useState(true);
   const { cafeList } = useDataStore();
   const path = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDA0MzBfMjY2%2FMDAxNzE0NDY2MTQ0ODg5.KGDCPBVbiG6yAj1RirUoroylMPix7BcwyRHjB2XJziEg.WDuIfCcx8liAGQU-1BX8ncYR5Tc8eleZ7YmWlvsB3ZQg.JPEG%2FKakaoTalk_20240430_165431398.jpg&type=sc960_832";
+  const sidebarRef = useRef<HTMLDivElement>(null)
 
   const onClickSidebarControlButton = useCallback(() => {
-    const layout = document.querySelector(".sidebar-layout") as HTMLElement;
-
-    if (open) {
-      layout.style.transform = "translateX(-100%)";
-    } else {
-      layout.style.transform = "translateX(0%)";
+    if (sidebarRef.current) {
+      if (open) {
+        sidebarRef.current.style.transform = "translateX(-100%)";
+      } else {
+        sidebarRef.current.style.transform = "translateX(0%)";
+      }
     }
 
     isOpen(!open);
@@ -40,9 +55,9 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <Layout className="sidebar-layout">
+    <Layout ref={sidebarRef}>
       <SidebarControlButton onClick={onClickSidebarControlButton}>
-        <Icon path={open ? mdiChevronLeft : mdiChevronRight} color="rgb(156, 156, 156)" />
+        <Icon path={open ? mdiChevronLeft : mdiChevronRight} color="#fff" />
       </SidebarControlButton>
       <SearchBarLayout>
         <SearchBar>

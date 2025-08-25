@@ -1,8 +1,8 @@
 import { Route, Routes, useNavigate } from "react-router";
 import styled from "styled-components";
-import Home from "../screen/Home";
 import { Colors } from "../utils/colors";
-import Login from "../screen/start/Login";
+import Login from "../pages/Login";
+import Home from "../pages/Home";
 import useDataStore from "../store/useDataStore";
 import { getCookie } from "../utils/cookie";
 import { useEffect } from "react";

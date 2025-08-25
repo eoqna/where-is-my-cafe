@@ -1,10 +1,10 @@
 import { useCallback, useRef, useState } from "react";
-import { Colors } from "../../utils/colors";
+import { Colors } from "../utils/colors";
 import SocialLogin from "./SocialLogin";
 import { NavigateFunction } from "react-router-dom";
-import { Container, FindPasswordText, Input, JoinLayout, LoginButton, LoginFormLayout, LoginLayout, SubTitle, Text, Title } from "../../assets/css/login";
-import { setCookie } from "../../utils/cookie";
-import useAppStore from "../../store/useAppStore";
+import { Container, FindPasswordText, Input, JoinLayout, LoginButton, LoginFormLayout, LoginLayout, SubTitle, Text, Title } from "../assets/css/login";
+import { setCookie } from "../utils/cookie";
+import useAppStore from "../store/useAppStore";
 
 const initUserInfo: LoginReq.SingUpProps = {
   user_id: "",
@@ -12,31 +12,31 @@ const initUserInfo: LoginReq.SingUpProps = {
   name: "",
 };
 
-interface LoginComponentProps {
+interface LoginFormProps {
   text: LoginReq.TextProps;
   monitor: boolean;
   setMonitor: React.Dispatch<React.SetStateAction<boolean>>;
   navigation: NavigateFunction;
 };
 
-const LoginForm = (props: LoginComponentProps) => {
-  const { text, monitor, setMonitor, navigation } = props;
+const LoginForm = ({ text, monitor, setMonitor, navigation }: LoginFormProps) => {
   const { openSidebar } = useAppStore();
   const [ userInfo, setUserInfo ] = useState(initUserInfo);
   const nmRef = useRef<HTMLInputElement>(null);
   const idRef = useRef<HTMLInputElement>(null);
   const pwRef = useRef<HTMLInputElement>(null);
+  const signInRef = useRef<HTMLDivElement>(null);
+  const signUpRef = useRef<HTMLDivElement>(null);
 
   const onClickSubButton = useCallback(() => {
-    const signIn = document.querySelector(".sign_in_layout") as HTMLElement;
-    const signUp = document.querySelector(".sign_up_layout") as HTMLElement;
-
-    if (!signIn.style.left || signIn.style.left === "0px") {
-      signIn.style.left = "50%";
-      signUp.style.right = "50%";
-    } else {
-      signIn.style.left = "0";
-      signUp.style.right = "0";
+    if (signInRef.current && signUpRef.current) {
+      if (!signInRef.current?.style.left || signInRef.current?.style.left === "0px") {
+        signInRef.current.style.left = "50%";
+        signUpRef.current.style.right = "50%";
+      } else {
+        signInRef.current.style.left = "0";
+        signUpRef.current.style.right = "0";
+      }
     }
 
     setUserInfo(initUserInfo);

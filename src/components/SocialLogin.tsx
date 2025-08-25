@@ -1,7 +1,7 @@
-import { Colors } from "../../utils/colors";
+import { Colors } from "../utils/colors";
 import Icon from "@mdi/react";
 import { mdiFacebook, mdiGooglePlus, mdiAlphaNBox } from '@mdi/js';
-import { SocialLoginButton, SocialLoginLayout } from "../../assets/css/login";
+import { SocialLoginButton, SocialLoginLayout } from "../assets/css/login";
 
 const SocialLogin = () => {
   return (

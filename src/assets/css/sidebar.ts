@@ -29,7 +29,7 @@ export const SidebarControlButton = styled.div`
   vertical-align: top;
   width: 22px;
   height: 49px;
-  background: ${Colors.White};
+  background: ${Colors.Login};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -126,7 +126,7 @@ export const DeleteButton = styled.button`
   bottom: 0px;
   z-index: 10;
   width: 43px;
-  background: rgb(255, 255, 255);
+  background: ${Colors.White};
   border-radius: 0px 5px 5px 0px;
   font-size: 1px;
   line-height: 1px;
@@ -143,7 +143,7 @@ export const ContentLayout = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: rgb(255, 255, 255);
+  background: ${Colors.White};
   padding-top: 76px;
   box-sizing: border-box;
 `;
@@ -156,10 +156,10 @@ export const CafeContentLayout = styled.div`
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background-color: #ddd;
+    background-color: transparent;
   }
   ::-webkit-scrollbar-thumb { 
-    background-color: #aaa;
+    background-color: ${Colors.Login};
     border-radius: 4px;
   }
   ::-webkit-scrollbar-button {
@@ -222,7 +222,7 @@ export const CafeImg = styled.img`
   position: relative;
   height: 180px;
   left: 50%;
-  width: 340px;
+  width: 100%;
   transition: transform 0.23s cubic-bezier(0.165, 0.84, 0.44, 1) 0s;
   transform: translateX(-50%) scale(1);
 `;
